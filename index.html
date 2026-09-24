@@ -21,7 +21,6 @@ html, body {
 }
 
 body {
-    min-height: 900vh;
     font-family: 'Outfit', sans-serif;
     color: #ffffff;
     overflow-x: hidden;
@@ -31,6 +30,8 @@ body {
 * { cursor: none !important; }
 
 ::-webkit-scrollbar { display: none; width: 0; }
+
+#story { height: 900vh; }
 
 #webgl {
     position: fixed;
@@ -75,13 +76,28 @@ body {
     box-sizing: border-box;
 }
 
+.site-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 60;
+    padding: 0 60px;
+    transition: background 0.5s ease, backdrop-filter 0.5s ease;
+}
+.site-header.solid {
+    background: rgba(6, 3, 12, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(157, 77, 255, 0.18);
+}
+
 /* ---------- Header ---------- */
 .main-header {
     display: flex; justify-content: space-between; align-items: center;
-    width: 100%; z-index: 20;
+    width: 100%; height: 70px;
     pointer-events: auto;
-    padding: 20px 0;
 }
+.brand { color: #ffffff; text-decoration: none; }
+.nav-shop { color: #c9a6ff; }
 .brand {
     display: flex; align-items: center; gap: 12px;
     font-size: 14px; font-weight: 600; letter-spacing: 5px; text-transform: uppercase;
@@ -189,7 +205,7 @@ body {
     font-weight: 400;
     letter-spacing: 2px;
     margin-bottom: 20px;
-    color: #f7f0ff;
+    color: #f4efff;
 }
 .slide-desc {
     font-size: 16px; line-height: 1.7; font-weight: 300;
@@ -248,9 +264,198 @@ body {
     box-shadow: 0 0 4px rgba(255, 255, 255, 0.15);
 }
 
+
+/* ---------- Shop section (normal flow, after the 900vh story) ---------- */
+.shop {
+    position: relative;
+    z-index: 50;
+    background:
+        radial-gradient(1200px 500px at 80% -10%, rgba(123, 47, 230, 0.22), transparent 60%),
+        radial-gradient(900px 500px at 0% 30%, rgba(91, 26, 166, 0.16), transparent 60%),
+        #05030a;
+    padding: 150px 60px 0 60px;
+    border-top: 1px solid rgba(157, 77, 255, 0.25);
+}
+.eyebrow {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: #b98cff; font-weight: 600;
+}
+.shop-head {
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 40px;
+    margin: 18px 0 50px;
+}
+.shop-title {
+    font-family: 'Italiana', serif; font-weight: 400;
+    font-size: clamp(54px, 7vw, 104px); line-height: 1.0; color: #f4efff;
+}
+.shop-title em {
+    font-family: 'Playfair Display', serif; font-style: italic; font-weight: 500;
+    background: linear-gradient(90deg, #b777ff, #7b2fe6);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.shop-lead {
+    max-width: 380px; font-size: 16px; line-height: 1.7; font-weight: 300; color: #c9c3d6;
+}
+
+.perks {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 70px;
+}
+.perk {
+    display: flex; align-items: center; gap: 14px;
+    padding: 26px 20px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+}
+.perk:last-child { border-right: none; }
+.perk svg { flex: none; width: 26px; height: 26px; stroke: #b98cff; }
+.perk strong { display: block; font-size: 14px; font-weight: 600; letter-spacing: 0.3px; }
+.perk span { display: block; font-size: 12px; color: #8e869e; font-weight: 300; margin-top: 2px; }
+
+.section-label {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 26px;
+}
+.section-label h3 {
+    font-family: 'Italiana', serif; font-weight: 400; font-size: 40px; color: #f4efff;
+}
+.text-link {
+    color: #c9a6ff; text-decoration: none; font-size: 11px;
+    letter-spacing: 2px; text-transform: uppercase; font-weight: 600;
+}
+.text-link:hover { color: #ffffff; }
+
+.products {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px;
+    margin-bottom: 90px;
+}
+.product {
+    position: relative;
+    display: flex; flex-direction: column;
+    padding: 26px 24px 24px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    color: #ffffff; text-decoration: none;
+    overflow: hidden;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+}
+.product::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(60% 45% at 50% 32%, var(--glow, rgba(157, 77, 255, 0.35)), transparent 70%);
+    opacity: 0.55; transition: opacity 0.5s;
+}
+.product:hover { transform: translateY(-6px); border-color: rgba(157, 77, 255, 0.5); }
+.product:hover::before { opacity: 1; }
+.product img {
+    position: relative; width: 82%; aspect-ratio: 1; object-fit: contain;
+    margin: 6px auto 22px;
+    filter: drop-shadow(0 24px 30px rgba(0,0,0,0.6));
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.product:hover img { transform: rotate(-8deg) scale(1.04); }
+.product .tag {
+    position: absolute; top: 18px; left: 18px;
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600;
+    padding: 6px 10px; border-radius: 20px;
+    background: rgba(157, 77, 255, 0.16); color: #d6bcff;
+    border: 1px solid rgba(157, 77, 255, 0.35);
+}
+.product h4 { position: relative; font-size: 17px; font-weight: 400; letter-spacing: 0.3px; }
+.product .specs {
+    position: relative; display: flex; gap: 8px; margin: 12px 0 18px;
+}
+.product .specs span {
+    font-size: 11px; color: #bfb7cf; padding: 4px 9px;
+    border: 1px solid rgba(255,255,255,0.12); border-radius: 6px;
+}
+.product .buy {
+    position: relative; margin-top: auto;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.price { font-size: 26px; font-weight: 600; letter-spacing: -0.3px; }
+.price small { display: block; font-size: 11px; font-weight: 300; color: #8e869e; letter-spacing: 0.3px; }
+.buy-btn {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: #ffffff; color: #000000;
+    transition: background 0.3s, transform 0.3s;
+}
+.product:hover .buy-btn { background: #9d4dff; color: #ffffff; transform: rotate(-45deg); }
+
+.lines {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px; overflow: hidden;
+    margin-bottom: 90px;
+}
+.line {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 26px 26px;
+    background: #07040d;
+    color: #ffffff; text-decoration: none;
+    transition: background 0.4s;
+}
+.line:hover { background: #140a24; }
+.line b { display: block; font-family: 'Italiana', serif; font-weight: 400; font-size: 26px; }
+.line span { display: block; font-size: 11px; color: #8e869e; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
+.line i { font-style: normal; color: #b98cff; font-size: 18px; transition: transform 0.4s; }
+.line:hover i { transform: translateX(6px); }
+
+.cta-band {
+    position: relative; overflow: hidden;
+    display: flex; justify-content: space-between; align-items: center; gap: 30px;
+    padding: 56px 60px;
+    border-radius: 24px;
+    background: linear-gradient(120deg, #5b1aa6, #8b3dff 55%, #3a0f73);
+    margin-bottom: 80px;
+}
+.cta-band h3 {
+    font-family: 'Italiana', serif; font-weight: 400;
+    font-size: clamp(38px, 4.6vw, 64px); line-height: 1.02;
+}
+.cta-band p { font-size: 15px; color: rgba(255,255,255,0.8); font-weight: 300; margin-top: 10px; }
+.cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 28px; border-radius: 40px;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600;
+    text-decoration: none; transition: transform 0.3s, background 0.3s;
+}
+.btn:hover { transform: scale(1.04); }
+.btn-light { background: #ffffff; color: #1a0833; }
+.btn-ghost { border: 1px solid rgba(255,255,255,0.6); color: #ffffff; }
+
+.site-footer {
+    display: flex; justify-content: space-between; align-items: center; gap: 20px;
+    padding: 30px 0 40px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 12px; color: #8e869e;
+}
+.site-footer a { color: #c9a6ff; text-decoration: none; }
+
+body.hover-link .cursor-outer { width: 64px; height: 64px; background: rgba(157, 77, 255, 0.12); }
+
 /* ---------- Small screens ---------- */
 @media (max-width: 820px) {
     .cinematic-container { padding: 0 20px 30px 20px; }
+    .site-header { padding: 0 20px; }
+    .brand small { display: none; }
+    .shop { padding: 120px 20px 0 20px; }
+    .shop-head { flex-direction: column; align-items: flex-start; }
+    .perks { grid-template-columns: 1fr 1fr; }
+    .perk { border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .products { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .product { padding: 18px 14px 16px; }
+    .product .tag { top: 12px; left: 12px; font-size: 8px; letter-spacing: 1.5px; padding: 4px 8px; }
+    .product img { margin-top: 26px; }
+    .perk:last-child { grid-column: 1 / -1; }
+    .price { font-size: 20px; }
+    .lines { grid-template-columns: 1fr 1fr; }
+    .cta-band { flex-direction: column; align-items: flex-start; padding: 36px 24px; }
+    .site-footer { flex-direction: column; align-items: flex-start; }
     .header-nav { display: none; }
     .slide-title { font-size: 58px; }
     #slide-1 .slide-title, #slide-2 .slide-title { margin-left: 20px; }
@@ -271,11 +476,11 @@ body {
 <div class="cursor-inner"></div>
 <div class="cursor-outer"></div>
 
-<div class="cinematic-container">
+<header class="site-header" id="site-header">
     <div class="main-header">
         <div class="brand">
             <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-                <rect x="8" y="8" width="24" height="24" transform="rotate(45 20 20)" stroke="#d24a8c" stroke-width="2.4"/>
+                <rect x="8" y="8" width="24" height="24" transform="rotate(45 20 20)" stroke="#9d4dff" stroke-width="2.4"/>
                 <rect x="11" y="11" width="18" height="18" transform="rotate(28 20 20)" stroke="#ffffff" stroke-opacity="0.55" stroke-width="1.2"/>
                 <path d="M13.5 25V15l6.5 6.5 6.5-6.5v10" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
             </svg>
@@ -289,11 +494,16 @@ body {
             <a href="#slide-3" class="nav-link">Médio</a>
             <span class="nav-dot"></span>
             <a href="#slide-4" class="nav-link">Nação</a>
+            <span class="nav-dot"></span>
+            <a href="#produtos" class="nav-link nav-shop">Loja</a>
         </nav>
         <div class="header-actions">
             <a href="https://www.instagram.com/monster.ofi/" target="_blank" rel="noopener" class="contact-btn">Contato <span class="btn-circle"></span></a>
         </div>
     </div>
+</header>
+
+<div class="cinematic-container">
 
     <div class="slide" id="slide-1">
         <h2 class="slide-title">Pressão <br>e Grave</h2>
@@ -352,6 +562,107 @@ body {
 
 <canvas id="webgl"></canvas>
 
+<div id="story"></div>
+
+<section class="shop" id="produtos">
+    <p class="eyebrow">Loja oficial Monster</p>
+    <div class="shop-head">
+        <h2 class="shop-title">Faça seu projeto <br><em>Full Monster</em></h2>
+        <p class="shop-lead">Graves, médios, módulos e reparos com a assinatura Monster — direto da fábrica para o seu carro, com entrega para todo o Brasil.</p>
+    </div>
+
+    <div class="perks">
+        <div class="perk"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><div><strong>Entrega</strong><span>para todo o Brasil</span></div></div>
+        <div class="perk"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h4"/></svg><div><strong>Até 12x</strong><span>no cartão de crédito</span></div></div>
+        <div class="perk"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 9-9 9-9-9z"/><path d="M9 12h6"/></svg><div><strong>3% de desconto</strong><span>em compras à vista</span></div></div>
+        <div class="perk"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7c-2-4-6-4-6-1s6 1 6 1zm0 0c2-4 6-4 6-1s-6 1-6 1z"/></svg><div><strong>5% off</strong><span>na primeira compra</span></div></div>
+        <div class="perk"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><div><strong>Site seguro</strong><span>compra protegida</span></div></div>
+    </div>
+
+    <div class="section-label">
+        <h3>Mais vendidos</h3>
+        <a class="text-link" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener">Ver todos →</a>
+    </div>
+    <div class="products">
+        <a class="product" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener" style="--glow: rgba(157, 77, 255, 0.40)">
+            <span class="tag">Subwoofer</span>
+            <img src="assets/sub-10-1000.png" alt="Grave Monster 10p 1000wRMS" loading="lazy">
+            <h4>Grave Monster 10p 1000wRMS</h4>
+            <div class="specs"><span>10 polegadas</span><span>1000 W RMS</span></div>
+            <div class="buy">
+                <div class="price">R$ 660,00<small>ou em até 12x no cartão</small></div>
+                <span class="buy-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+        </a>
+        <a class="product" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener" style="--glow: rgba(220, 220, 235, 0.22)">
+            <span class="tag">Subwoofer</span>
+            <img src="assets/sub-10-600.png" alt="Grave Monster 10p 600wRMS" loading="lazy">
+            <h4>Grave Monster 10p 600wRMS</h4>
+            <div class="specs"><span>10 polegadas</span><span>600 W RMS</span></div>
+            <div class="buy">
+                <div class="price">R$ 520,00<small>ou em até 12x no cartão</small></div>
+                <span class="buy-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+        </a>
+        <a class="product" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener" style="--glow: rgba(157, 77, 255, 0.40)">
+            <span class="tag">Subwoofer</span>
+            <img src="assets/sub-12-1000.png" alt="Grave Monster 12p 1000wRMS" loading="lazy">
+            <h4>Grave Monster 12p 1000wRMS</h4>
+            <div class="specs"><span>12 polegadas</span><span>1000 W RMS</span></div>
+            <div class="buy">
+                <div class="price">R$ 720,00<small>ou em até 12x no cartão</small></div>
+                <span class="buy-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+        </a>
+        <a class="product" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener" style="--glow: rgba(235, 70, 55, 0.32)">
+            <span class="tag">Subwoofer</span>
+            <img src="assets/sub-12-1400.png" alt="Grave Monster 12p 1400wRMS" loading="lazy">
+            <h4>Grave Monster 12p 1400wRMS</h4>
+            <div class="specs"><span>12 polegadas</span><span>1400 W RMS</span></div>
+            <div class="buy">
+                <div class="price">R$ 840,00<small>ou em até 12x no cartão</small></div>
+                <span class="buy-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+        </a>
+    </div>
+
+    <div class="section-label">
+        <h3>Linhas</h3>
+        <a class="text-link" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener">Todos os departamentos →</a>
+    </div>
+    <div class="lines">
+        <a class="line" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener"><div><b>Subwoofer 8"</b><span>Graves</span></div><i>→</i></a>
+        <a class="line" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener"><div><b>Subwoofer 10"</b><span>Graves</span></div><i>→</i></a>
+        <a class="line" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener"><div><b>Subwoofer 12"</b><span>Graves</span></div><i>→</i></a>
+        <a class="line" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener"><div><b>Sub Slim 12"</b><span>Graves</span></div><i>→</i></a>
+        <a class="line" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener"><div><b>Médio 6"</b><span>Médios</span></div><i>→</i></a>
+        <a class="line" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener"><div><b>Médio 6x9</b><span>Médios</span></div><i>→</i></a>
+        <a class="line" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener"><div><b>Médio 8"</b><span>Médios</span></div><i>→</i></a>
+        <a class="line" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener"><div><b>Módulos</b><span>Amplificação</span></div><i>→</i></a>
+        <a class="line" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener"><div><b>Reparos Sub</b><span>8, 10 e 12 polegadas</span></div><i>→</i></a>
+        <a class="line" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener"><div><b>Reparos Médios</b><span>Kits de reparo</span></div><i>→</i></a>
+        <a class="line" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener"><div><b>Acessórios</b><span>Instalação</span></div><i>→</i></a>
+        <a class="line" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener"><div><b>Ofertas</b><span>Promoções</span></div><i>→</i></a>
+    </div>
+
+    <div class="cta-band">
+        <div>
+            <h3>Monte seu som <br>com quem entende de grave.</h3>
+            <p>Fale com a equipe Monster e receba ajuda para escolher o conjunto ideal.</p>
+        </div>
+        <div class="cta-actions">
+            <a class="btn btn-light" href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener">Comprar agora</a>
+            <a class="btn btn-ghost" href="https://www.instagram.com/monster.ofi/" target="_blank" rel="noopener">@monster.ofi</a>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <span>© 2026 Monster Alto-Falantes. Todos os direitos reservados.</span>
+        <span><a href="https://www.instagram.com/monster.ofi/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.monsteraltofalantes.com.br/" target="_blank" rel="noopener">Loja</a></span>
+    </footer>
+</section>
+
+
 <script type="importmap">
 {
     "imports": {
@@ -394,8 +705,8 @@ const sparkData = [];
 const sizes = { width: window.innerWidth, height: window.innerHeight };
 
 // Brand accents
-const BRAND_MAGENTA = '#d24a8c';
-const BRAND_PLUM = '#7d2a66';
+const BRAND_VIOLET = '#9d4dff';
+const BRAND_DEEP = '#5b1aa6';
 
 /* ------------------------------------------------------------------ */
 /*  Background wave shader: brand magenta/plum → deep sapphire        */
@@ -470,11 +781,11 @@ function createBackgroundShader() {
             float crispSpecular = pow(max(0.0, 1.0 - abs(waveField - 0.15)), 8.0);
             float crest = wideSheen * 0.5 + crispSpecular * 0.9;
 
-            // Top palette (scroll = 0): Monster magenta / plum
-            vec3 c0_shadow = vec3(0.0010, 0.0004, 0.0008);
-            vec3 c0_wave1  = vec3(0.062, 0.014, 0.042);
-            vec3 c0_wave2  = vec3(0.034, 0.008, 0.024);
-            vec3 c0_crest  = vec3(0.30, 0.10, 0.23);
+            // Top palette (scroll = 0): Monster violet
+            vec3 c0_shadow = vec3(0.0007, 0.0004, 0.0012);
+            vec3 c0_wave1  = vec3(0.046, 0.014, 0.080);
+            vec3 c0_wave2  = vec3(0.024, 0.008, 0.046);
+            vec3 c0_crest  = vec3(0.24, 0.10, 0.38);
 
             // Bottom palette (scroll = 1): deep sapphire (the studio-blue of the product shots)
             vec3 c1_shadow = vec3(0.0004, 0.0006, 0.0012);
@@ -542,10 +853,10 @@ function createSparks() {
         positions[i * 3 + 2] = (Math.random() - 0.5) * 6.5;
 
         if (Math.random() < 0.6) {
-            // brand magenta-pink
-            colors[i * 3]     = 1.0;
-            colors[i * 3 + 1] = 0.22 + Math.random() * 0.15;
-            colors[i * 3 + 2] = 0.55 + Math.random() * 0.2;
+            // brand violet
+            colors[i * 3]     = 0.62 + Math.random() * 0.15;
+            colors[i * 3 + 1] = 0.28 + Math.random() * 0.12;
+            colors[i * 3 + 2] = 1.0;
         } else {
             // icy blue (matches rim light)
             colors[i * 3]     = 0.55 + Math.random() * 0.15;
@@ -611,8 +922,8 @@ function createLogoTexture() {
     ctx.translate(s / 2, s / 2);
 
     const grad = ctx.createLinearGradient(-150, -150, 150, 150);
-    grad.addColorStop(0, BRAND_MAGENTA);
-    grad.addColorStop(1, BRAND_PLUM);
+    grad.addColorStop(0, BRAND_VIOLET);
+    grad.addColorStop(1, BRAND_DEEP);
 
     ctx.save();
     ctx.rotate(Math.PI / 4);
@@ -623,7 +934,7 @@ function createLogoTexture() {
 
     ctx.save();
     ctx.rotate(Math.PI / 4 + 0.32);
-    ctx.strokeStyle = 'rgba(210, 74, 140, 0.55)';
+    ctx.strokeStyle = 'rgba(157, 77, 255, 0.55)';
     ctx.lineWidth = 8;
     ctx.strokeRect(-92, -92, 184, 184);
     ctx.restore();
@@ -953,14 +1264,27 @@ function updateSlides(scroll) {
     }
 }
 
+const storyEl = document.getElementById('story');
+const shopEl = document.getElementById('produtos');
+const siteHeader = document.getElementById('site-header');
+const storyMax = () => Math.max(1, storyEl.offsetHeight - window.innerHeight);
+
 function setupNavigation() {
     const targetScrolls = [0.0, 0.34, 0.62, 0.94];
-    document.querySelectorAll('.nav-link').forEach((link, index) => {
+    document.querySelectorAll('.nav-link:not(.nav-shop)').forEach((link, index) => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-            window.scrollTo({ top: maxScroll * targetScrolls[index], behavior: 'smooth' });
+            window.scrollTo({ top: storyMax() * targetScrolls[index], behavior: 'smooth' });
         });
+    });
+    document.querySelector('.nav-shop').addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: shopEl.offsetTop, behavior: 'smooth' });
+    });
+
+    // cursor ring grows over anything clickable
+    document.addEventListener('mouseover', (e) => {
+        document.body.classList.toggle('hover-link', !!e.target.closest('a, button'));
     });
 }
 
@@ -975,19 +1299,28 @@ function animate() {
     const deltaTime = Math.min(clock.getDelta(), 0.1);
     const elapsed = clock.getElapsedTime();
 
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     const scrollTop = window.scrollY ?? window.pageYOffset ?? document.documentElement.scrollTop;
-    const targetScroll = maxScroll > 0 ? scrollTop / maxScroll : 0;
+    const targetScroll = Math.min(1, scrollTop / storyMax());
 
-    currentScroll += (targetScroll - currentScroll) * 0.025;
-
-    mouseX += (targetMouseX - mouseX) * 0.05;
-    mouseY += (targetMouseY - mouseY) * 0.05;
+    // once the shop covers the stage, give the header a solid backdrop and skip heavy work
+    const inShop = scrollTop > shopEl.offsetTop - 80;
+    siteHeader.classList.toggle('solid', inShop);
 
     outerCursorX += (cursorX - outerCursorX) * 0.2;
     outerCursorY += (cursorY - outerCursorY) * 0.2;
     cursorOuter.style.left = `${outerCursorX}px`;
     cursorOuter.style.top = `${outerCursorY}px`;
+
+    if (scrollTop > shopEl.offsetTop + 10) {
+        if (!media4Video.paused) media4Video.pause();
+        return;
+    }
+    if (media4.classList.contains('active') && media4Video.paused) media4Video.play().catch(() => {});
+
+    currentScroll += (targetScroll - currentScroll) * 0.025;
+
+    mouseX += (targetMouseX - mouseX) * 0.05;
+    mouseY += (targetMouseY - mouseY) * 0.05;
 
     const scrollVelocity = Math.abs(targetScroll - currentScroll);
 
@@ -1098,8 +1431,8 @@ async function init() {
     rimLight.position.set(-5, 3, -4);
     scene.add(rimLight);
 
-    // brand-tinted kicker so the cone edge picks up magenta
-    const kicker = new THREE.PointLight(BRAND_MAGENTA, 6.0, 8, 2);
+    // brand-tinted kicker so the cone edge picks up violet
+    const kicker = new THREE.PointLight(BRAND_VIOLET, 6.0, 8, 2);
     kicker.position.set(-2.2, -0.6, 2.0);
     scene.add(kicker);
 
